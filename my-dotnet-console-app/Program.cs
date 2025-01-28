@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Microsoft.VisualStudio.TextTemplating;
 
 namespace MyDotNetConsoleApp
 {
@@ -17,48 +16,15 @@ namespace MyDotNetConsoleApp
             string templateFilePath = args[0];
             string xmlFilePath = args[1];
 
-            string templateContent = File.ReadAllText(templateFilePath);
-            string outputContent = ProcessTemplate(templateContent, xmlFilePath);
+            // Source Generator を使用してテンプレートを処理
+            var generator = new TemplateProcessorGenerator();
+            var context = new GeneratorExecutionContext();
+            context.AnalyzerConfigOptions.GlobalOptions["build_property.TemplateFilePath"] = templateFilePath;
+            context.AnalyzerConfigOptions.GlobalOptions["build_property.XmlFilePath"] = xmlFilePath;
 
-            string outputFilePath = Path.ChangeExtension(templateFilePath, ".txt");
-            File.WriteAllText(outputFilePath, outputContent);
+            generator.Execute(context);
 
-            Console.WriteLine($"Output written to {outputFilePath}");
+            Console.WriteLine($"Output written to {Path.ChangeExtension(templateFilePath, ".txt")}");
         }
-
-        static string ProcessTemplate(string templateContent, string xmlFilePath)
-        {
-            var host = new CustomTextTemplatingHost();
-            host.TemplateFile = templateContent;
-            host.Session["XmlFilePath"] = xmlFilePath;
-
-            var engine = new Engine();
-            string output = engine.ProcessTemplate(templateContent, host);
-
-            if (host.Errors.HasErrors)
-            {
-                foreach (var error in host.Errors)
-                {
-                    Console.WriteLine(error);
-                }
-                throw new Exception("Template processing failed.");
-            }
-
-            return output;
-        }
-    }
-
-    public class CustomTextTemplatingHost : ITextTemplatingEngineHost
-    {
-        public string TemplateFile { get; set; }
-        public IDictionary<string, object> Session { get; } = new Dictionary<string, object>();
-
-        public string ResolvePath(string path)
-        {
-            return Path.GetFullPath(path);
-        }
-
-        // Implement other ITextTemplatingEngineHost members as needed
-        // ...
     }
 }
