@@ -1,0 +1,18 @@
+<#@ template language="C#" #>
+<#@ output extension=".txt" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+
+<#
+    var xmlFilePath = @"<#= this.Host.ResolvePath("input.xml") #>";
+    var xml = XDocument.Load(xmlFilePath);
+#>
+テキストファイルの内容:
+<#
+    foreach (var element in xml.Root.Elements())
+    {
+#>
+要素名: <#= element.Name #>, 値: <#= element.Value #>
+<#
+    }
+#>
