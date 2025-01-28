@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace MyDotNetConsoleApp
+namespace my_dotnet_console_app
 {
     /// <summary>
     /// テンプレート処理を行うクラス
