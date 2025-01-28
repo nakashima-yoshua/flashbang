@@ -1,0 +1,14 @@
+﻿<root>
+  <name>John Doe</name>
+  <isActive>true</isActive>
+  <favoriteColors>
+    <color>Red</color>
+    <color>Green</color>
+    <color>Blue</color>
+  </favoriteColors>
+  <address>
+    <street>123 Main St</street>
+    <city>Springfield</city>
+    <zipCode>12345</zipCode>
+  </address>
+</root>

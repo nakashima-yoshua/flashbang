@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "my-dotnet-console-app": {
+      "commandName": "Project",
+      "commandLineArgs": "template.hbs data.xml"
+    }
+  }
+}

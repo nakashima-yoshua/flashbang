@@ -14,14 +14,12 @@ public class TemplateProcessorGenerator : ISourceGenerator
 
     public void Execute(GeneratorExecutionContext context)
     {
-        // テンプレートファイルとXMLファイルのパスを取得
-        var templateFilePath = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.TemplateFilePath", out var templatePath) ? templatePath : null;
-        var xmlFilePath = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.XmlFilePath", out var xmlPath) ? xmlPath : null;
+        // AdditionalText からテンプレートファイルとXMLファイルのパスを取得
+        var templateFile = context.AdditionalFiles[0];
+        var xmlFile = context.AdditionalFiles[1];
 
-        if (templateFilePath == null || xmlFilePath == null)
-        {
-            return;
-        }
+        var templateFilePath = templateFile.Path;
+        var xmlFilePath = xmlFile.Path;
 
         // テンプレートとXMLの内容を読み込む
         var templateContent = File.ReadAllText(templateFilePath);

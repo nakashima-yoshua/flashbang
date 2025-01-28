@@ -1,0 +1,17 @@
+﻿Hello, {{name}}!
+
+{{#if isActive}}
+You are currently active.
+{{else}}
+You are not active.
+{{/if}}
+
+Your favorite colors are:
+{{#each favoriteColors}}
+- {{this}}
+{{/each}}
+
+Your address:
+{{address.street}}, {{address.city}}, {{address.zipCode}}
+
+Thank you!
