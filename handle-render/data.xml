@@ -5,6 +5,9 @@
     <color>Red</color>
     <color>Green</color>
     <color>Blue</color>
+    <balar>1</balar>
+    <balar>2</balar>
+    <balar>3</balar>
   </favoriteColors>
   <address>
     <street>123 Main St</street>

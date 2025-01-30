@@ -7,7 +7,11 @@ You are not active.
 {{/if}}
 
 Your favorite colors are:
-{{#each favoriteColors}}
+{{#each favoriteColors.color}}
+- {{this}}
+{{/each}}
+
+{{#each favoriteColors.balar}}
 - {{this}}
 {{/each}}
 
