@@ -126,7 +126,6 @@ namespace handleRender
             return !diagnostics.Any(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
         }
 
-
         /// <summary>
         /// XML—v‘f‚ğÄ‹A“I‚É‰ğÍ‚µA«‘‚ÉŠi”[‚·‚é
         /// </summary>
@@ -176,15 +175,6 @@ namespace handleRender
             }
 
             return result;
-        }
-
-        class ObjectCollection : List<object>
-        {
-            public override string ToString()
-            {
-
-                return base.ToString();
-            }
         }
 
         /// <summary>
