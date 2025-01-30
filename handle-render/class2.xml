@@ -1,0 +1,21 @@
+﻿<root>
+  <className>Animal</className>
+  <properties>
+    <property>
+      <propertyName>Id</propertyName>
+      <type>int</type>
+    </property>
+    <property>
+      <propertyName>Name</propertyName>
+      <type>string</type>
+    </property>
+    <property>
+      <propertyName>Age</propertyName>
+      <type>int</type>
+    </property>
+    <property>
+      <propertyName>Tall</propertyName>
+      <type>double</type>
+    </property>
+  </properties>
+</root>

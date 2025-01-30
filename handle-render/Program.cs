@@ -61,7 +61,7 @@ namespace handleRender
                     string result = CompileTemplate(templateFilePath, xmlFilePath);
 
                     Console.WriteLine("--- Export  ---");
-                    string outputFilePath = ExportFile(templateFilePath, result);
+                    string outputFilePath = ExportFile(xmlFilePath, result);
 
                     Console.WriteLine("--- End     ---");
                     Console.WriteLine();

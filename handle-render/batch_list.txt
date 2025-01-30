@@ -1,2 +1,3 @@
 ﻿class.hbs, class.xml
+class.hbs, class2.xml
 template.hbs, data.xml
