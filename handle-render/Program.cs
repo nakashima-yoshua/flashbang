@@ -22,15 +22,81 @@ namespace handleRender
         /// <param name="args">コマンドライン引数</param>
         static void Main(string[] args)
         {
-            if (args.Length < 2)
+            if (args.Length < 1)
             {
-                Console.WriteLine("Usage: Program.exe <TemplateFilePath> <XmlFilePath>");
+                Console.WriteLine("Usage: Program.exe <BatchListFilePath>");
                 return;
             }
 
-            string templateFilePath = args[0];
-            string xmlFilePath = args[1];
+            string batchListFilePath = args[0];
 
+            if (!File.Exists(batchListFilePath))
+            {
+                Console.WriteLine($"Error: File not found - {batchListFilePath}");
+                return;
+            }
+
+            // リストファイルを読み込んで処理
+            foreach (var line in File.ReadLines(batchListFilePath))
+            {
+                var parts = line.Split(',');
+                if (parts.Length != 2)
+                {
+                    Console.WriteLine($"Skipping invalid line: {line}");
+                    continue;
+                }
+
+                string templateFilePath = parts[0].Trim();
+                string xmlFilePath = parts[1].Trim();
+
+                if (!File.Exists(templateFilePath) || !File.Exists(xmlFilePath))
+                {
+                    Console.WriteLine($"Skipping: File not found - {templateFilePath} or {xmlFilePath}");
+                    continue;
+                }
+
+                try
+                {
+                    Console.WriteLine("--- Compile ---");
+                    string result = CompileTemplate(templateFilePath, xmlFilePath);
+
+                    Console.WriteLine("--- Export  ---");
+                    string outputFilePath = ExportFile(templateFilePath, result);
+
+                    Console.WriteLine("--- End     ---");
+                    Console.WriteLine();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error processing {templateFilePath} and {xmlFilePath}: {ex.Message}");
+                }
+            }
+        }
+
+        private static string ExportFile(string templateFilePath, string result)
+        {
+            // 生成されたコードがC#かを判定
+            bool isCSharpCode = IsCSharpCode(result);
+            Console.WriteLine($"Is the generated code C#? {isCSharpCode}");
+
+            string extension = isCSharpCode ? ".cs" : ".txt";
+
+            // 結果を txt ファイルに出力
+            string outputFilePath = Path.ChangeExtension(templateFilePath, extension);
+            File.WriteAllText(outputFilePath, result);
+            Console.WriteLine($"Output written to {outputFilePath}");
+
+            return outputFilePath;
+        }
+
+        /// <summary>
+        /// テンプレートをコンパイルして実行する
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="templateFilePath"></param>
+        /// <returns></returns>
+        private static string CompileTemplate(string templateFilePath, string xmlFilePath)
+        {
             // テンプレートファイルを読み込む
             string templateContent = File.ReadAllText(templateFilePath);
 
@@ -45,17 +111,7 @@ namespace handleRender
             string result = template(xmlData);
             Console.Write(result);
 
-            // 生成されたコードがC#かを判定
-            bool isCSharpCode = IsCSharpCode(result);
-            Console.WriteLine($"Is the generated code C#? {isCSharpCode}");
-
-            string extension = isCSharpCode ? ".cs" : ".txt";
-
-            // 結果を txt ファイルに出力
-            string outputFilePath = Path.ChangeExtension(templateFilePath, extension);
-            File.WriteAllText(outputFilePath, result);
-
-            Console.WriteLine($"Output written to {outputFilePath}");
+            return result;
         }
 
         /// <summary>
