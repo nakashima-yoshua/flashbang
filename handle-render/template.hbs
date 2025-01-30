@@ -15,6 +15,10 @@ Your favorite colors are:
 - {{this}}
 {{/each}}
 
+{{#each favoriteColors.more}}
+  -{{#each this.bore}}-{{this}}{{/each}}
+{{/each}}
+
 Your address:
 {{address.street}}, {{address.city}}, {{address.zipCode}}
 
